@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-G">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cozy Video Corner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* A very subtle gradient or a soft solid color for coziness */
+            background-color: #FFF8E1; /* Creamy beige */
+        }
+        /* Custom scrollbar for a cozier feel - optional */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF0C9; /* Lighter than body */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FFCC80; /* Muted orange */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFA726; /* Brighter orange on hover */
+        }
+        .video-embed-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        .video-embed-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 0.5rem; /* rounded-lg */
+        }
+        .message-box {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .message-box.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="text-amber-900 min-h-screen flex flex-col items-center justify-start p-4 sm:p-8 selection:bg-orange-200 selection:text-orange-700">
+
+    <div class="w-full max-w-3xl bg-amber-50 p-6 sm:p-8 rounded-xl shadow-2xl space-y-8">
+        <header class="text-center">
+            <h1 class="text-4xl sm:text-5xl font-bold text-orange-600">Cozy Video Corner</h1>
+            <p class="text-amber-700 mt-2 text-lg">Your personal space to save and watch your favorite YouTube videos.</p>
+        </header>
+
+        <section class="space-y-4">
+            <label for="youtubeLink" class="block text-lg font-medium text-amber-800">Paste YouTube Video Link:</label>
+            <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
+                <input type="url" id="youtubeLink" placeholder="e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                       class="flex-grow p-3 border border-amber-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition-shadow duration-200 shadow-sm bg-white placeholder-amber-400">
+                <button id="addVideoButton"
+                        class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 active:scale-95">
+                    Add Video
+                </button>
+            </div>
+            <div id="messageBox" class="message-box mt-3 text-center p-3 rounded-md"></div>
+        </section>
+
+        <section id="currentVideoSection" class="space-y-4">
+            <h2 class="text-2xl font-semibold text-orange-500 border-b-2 border-orange-200 pb-2">Current Video</h2>
+            <div id="videoPlayerContainer" class="bg-amber-100 p-2 rounded-lg shadow-inner min-h-[200px] flex items-center justify-center">
+                <p id="playerPlaceholder" class="text-amber-600">Your video will appear here!</p>
+                </div>
+        </section>
+
+        <section id="savedVideosSection" class="space-y-4">
+            <h2 class="text-2xl font-semibold text-orange-500 border-b-2 border-orange-200 pb-2">Saved Videos</h2>
+            <div id="savedVideosContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <p id="noSavedVideos" class="text-amber-600 col-span-full">No videos saved yet. Add some!</p>
+            </div>
+        </section>
+    </div>
+
+    <footer class="text-center mt-12 mb-6">
+        <p class="text-amber-600 text-sm">&copy; <span id="year"></span> Yash's studio. Made with <span class="text-red-500">&hearts;</span>.</p>
+    </footer>
+
+    <script>
+        // --- DOM Elements ---
+        const youtubeLinkInput = document.getElementById('youtubeLink');
+        const addVideoButton = document.getElementById('addVideoButton');
+        const videoPlayerContainer = document.getElementById('videoPlayerContainer');
+        const playerPlaceholder = document.getElementById('playerPlaceholder');
+        const savedVideosContainer = document.getElementById('savedVideosContainer');
+        const noSavedVideosMessage = document.getElementById('noSavedVideos');
+        const messageBox = document.getElementById('messageBox');
+        const yearSpan = document.getElementById('year');
+        yearSpan.textContent = new Date().getFullYear();
+
+        // --- Cookie Helper Functions ---
+        /**
+         * Sets a cookie.
+         * @param {string} name - The name of the cookie.
+         * @param {string} value - The value of the cookie.
+         * @param {number} days - The number of days until the cookie expires.
+         */
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            // Added SameSite=Lax for better security practices
+            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+        }
+
+        /**
+         * Gets a cookie by name.
+         * @param {string} name - The name of the cookie.
+         * @returns {string|null} The cookie value or null if not found.
+         */
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // --- YouTube Video ID Extractor ---
+        /**
+         * Extracts YouTube video ID from various URL formats.
+         * @param {string} url - The YouTube URL.
+         * @returns {string|null} The video ID or null if not found.
+         */
+        function getYoutubeVideoId(url) {
+            if (!url) return null;
+            // Regex to capture video ID from various YouTube URL formats
+            const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const match = url.match(regex);
+            return match ? match[1] : null;
+        }
+
+        // --- Message Display Function ---
+        /**
+         * Displays a message in the message box.
+         * @param {string} text - The message text.
+         * @param {boolean} isError - True if it's an error message, false for success.
+         */
+        function showMessage(text, isError = false) {
+            messageBox.textContent = text;
+            messageBox.className = 'message-box mt-3 text-center p-3 rounded-md'; // Reset classes
+            if (isError) {
+                messageBox.classList.add('bg-red-100', 'text-red-700');
+            } else {
+                messageBox.classList.add('bg-green-100', 'text-green-700');
+            }
+            messageBox.classList.add('show'); // Trigger animation
+
+            // Hide message after 3 seconds
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, 3000);
+        }
+
+
+        // --- Video Embedding Functions ---
+        /**
+         * Embeds a YouTube video in a specified container.
+         * @param {string} videoId - The YouTube video ID.
+         * @param {HTMLElement} container - The HTML element to embed the video in.
+         * @param {boolean} isMainPlayer - True if this is for the main player.
+         */
+        function embedVideo(videoId, container, isMainPlayer = false) {
+            if (playerPlaceholder && isMainPlayer) {
+                playerPlaceholder.style.display = 'none'; // Hide placeholder
+            }
+            
+            // Clear previous content if it's the main player
+            if (isMainPlayer) {
+                 while (container.firstChild && container.firstChild !== playerPlaceholder) {
+                    container.removeChild(container.firstChild);
+                }
+            }
+
+            const embedContainer = document.createElement('div');
+            embedContainer.className = 'video-embed-container shadow-md';
+            if (!isMainPlayer) {
+                // Smaller size for saved videos, but still responsive
+                embedContainer.classList.add('w-full'); // Ensure it takes full width of its grid cell
+            }
+
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0`; // Added rel=0
+            iframe.title = "YouTube video player";
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+            iframe.allowFullscreen = true;
+            
+            embedContainer.appendChild(iframe);
+            
+            if (isMainPlayer) {
+                container.appendChild(embedContainer);
+            } else {
+                // For saved videos, create a wrapper for each video card
+                const videoCard = document.createElement('div');
+                videoCard.className = 'bg-amber-100 p-2 rounded-lg shadow-md';
+                videoCard.appendChild(embedContainer);
+                container.appendChild(videoCard);
+            }
+        }
+
+        // --- Saved Videos Management ---
+        const SAVED_VIDEOS_COOKIE_NAME = 'cozySavedVideos';
+
+        /**
+         * Loads saved video IDs from cookies.
+         * @returns {string[]} An array of video IDs.
+         */
+        function loadSavedVideoIds() {
+            const cookieValue = getCookie(SAVED_VIDEOS_COOKIE_NAME);
+            if (cookieValue) {
+                try {
+                    return JSON.parse(cookieValue);
+                } catch (e) {
+                    console.error("Error parsing saved videos cookie:", e);
+                    return []; // Return empty array on error
+                }
+            }
+            return [];
+        }
+
+        /**
+         * Saves a video ID to cookies.
+         * @param {string} videoId - The YouTube video ID to save.
+         */
+        function saveVideoId(videoId) {
+            let savedIds = loadSavedVideoIds();
+            if (!savedIds.includes(videoId)) {
+                savedIds.unshift(videoId); // Add to the beginning for newest first
+                // Optional: Limit the number of saved videos if desired
+                // if (savedIds.length > 20) savedIds = savedIds.slice(0, 20); 
+                setCookie(SAVED_VIDEOS_COOKIE_NAME, JSON.stringify(savedIds), 365); // Save for 1 year
+                return true; // Indicate that the video was newly saved
+            }
+            return false; // Indicate that the video was already saved
+        }
+
+        /**
+         * Displays all saved videos from cookies.
+         */
+        function displaySavedVideos() {
+            savedVideosContainer.innerHTML = ''; // Clear current saved videos
+            const savedIds = loadSavedVideoIds();
+
+            if (savedIds.length === 0) {
+                if (noSavedVideosMessage) noSavedVideosMessage.style.display = 'block';
+            } else {
+                if (noSavedVideosMessage) noSavedVideosMessage.style.display = 'none';
+                savedIds.forEach(videoId => {
+                    embedVideo(videoId, savedVideosContainer, false);
+                });
+            }
+        }
+
+        // --- Event Listener for Add Video Button ---
+        addVideoButton.addEventListener('click', () => {
+            const url = youtubeLinkInput.value.trim();
+            if (!url) {
+                showMessage("Please paste a YouTube video link.", true);
+                return;
+            }
+
+            const videoId = getYoutubeVideoId(url);
+            if (!videoId) {
+                showMessage("Invalid YouTube URL. Please check the link and try again.", true);
+                youtubeLinkInput.value = ''; // Clear invalid input
+                return;
+            }
+
+            // Embed in main player
+            embedVideo(videoId, videoPlayerContainer, true);
+            
+            // Save and update saved videos list
+            const newlySaved = saveVideoId(videoId);
+            if (newlySaved) {
+                displaySavedVideos(); // Refresh the list of saved videos
+                showMessage("Video added and saved!", false);
+            } else {
+                showMessage("Video added (it was already saved).", false);
+            }
+            
+            youtubeLinkInput.value = ''; // Clear input after successful addition
+        });
+
+        // --- Initial Load ---
+        // Display any saved videos when the page loads
+        displaySavedVideos();
+
+    </script>
+</body>
+</html>

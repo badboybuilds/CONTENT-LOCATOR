@@ -1,0 +1,493 @@
+/* --- Global Styles & Fonts --- */
+body {
+    font-family: 'M PLUS Rounded 1c', 'Sawarabi Mincho', sans-serif;
+    background-color: #fce4ec; /* Sakura Pink Lightest */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top for longer content */
+    min-height: 100vh;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    cursor: none; /* Hide default cursor */
+}
+
+.container {
+    background-color: #ffffff; /* White */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 700px; /* Max width for larger screens */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative; /* For positioning absolute elements like animations */
+}
+
+/* --- Animated Fox Mask Cursor --- */
+#foxMaskCursor {
+    position: fixed; /* Follows the cursor */
+    pointer-events: none; /* Doesn't interfere with clicks */
+    z-index: 9999;
+    transition: transform 0.1s ease-out; /* Smooth follow */
+}
+
+#foxMaskCursor img {
+    width: 40px; /* Adjust size as needed */
+    height: auto;
+    opacity: 0; /* Initially hidden */
+}
+
+body:hover #foxMaskCursor img {
+    opacity: 1;
+}
+
+/* Elements that should have a normal pointer when fox mask is active */
+button:hover, a:hover, input[type="checkbox"]:hover, input[type="radio"]:hover, select:hover, label:hover {
+    cursor: pointer !important;
+}
+
+
+/* --- Japanese Elements & Aesthetics --- */
+.shoji-screen-section {
+    background-color: #fdf5e6; /* Light Beige */
+    border: 2px solid #d1c4e9; /* Light Purple/Blue */
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative; /* For potential pseudo-elements for shoji lines */
+}
+
+/* Example for subtle shoji lines (can be enhanced) */
+.shoji-screen-section::before,
+.shoji-screen-section::after {
+    content: '';
+    position: absolute;
+    background-color: rgba(173, 216, 230, 0.3); /* Light Sky Blue, transparent */
+}
+
+.shoji-screen-section::before { /* Vertical lines */
+    width: 1px;
+    top: 10px;
+    bottom: 10px;
+    left: 33.33%;
+    /* box-shadow: 66.66% 0 0 rgba(173, 216, 230, 0.3); */ /* For a second line */
+}
+
+.shoji-screen-section::after { /* Horizontal lines */
+    height: 1px;
+    left: 10px;
+    right: 10px;
+    top: 50%;
+}
+
+
+.icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/* --- Hero Section --- */
+.hero-section {
+    padding: 30px 10px;
+    border-bottom: 2px dashed #ffc0cb; /* Sakura Pink */
+}
+
+.hero-section h1 {
+    font-family: 'Sawarabi Mincho', serif;
+    color: #e91e63; /* Deeper Pink */
+    font-size: 2.2em;
+    margin-bottom: 10px;
+}
+
+.hero-section .tagline {
+    font-size: 1.2em;
+    color: #7986cb; /* Soft Indigo/Blue */
+    margin-bottom: 25px;
+}
+
+.cta-button {
+    background-color: #add8e6; /* Sky Blue */
+    color: #333;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cta-button:hover {
+    background-color: #87ceeb; /* Darker Sky Blue */
+    transform: translateY(-2px);
+}
+
+.cta-button img.icon {
+    margin-left: 8px;
+}
+
+/* --- Non-Negotiable Toggle & Warning --- */
+.non-negotiable-toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Position to the right */
+    margin-bottom: 15px;
+    font-size: 0.9em;
+}
+
+.non-negotiable-toggle-container span {
+    margin-left: 8px;
+    color: #555;
+}
+
+.non-negotiable-warning {
+    background-color: #fff9c4; /* Light Yellow */
+    border: 1px solid #fbc02d; /* Yellow */
+    color: #5d4037; /* Brownish text */
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+.non-negotiable-warning strong .icon {
+    margin-right: 8px;
+    color: #f57f17; /* Orange for warning icon */
+}
+.non-negotiable-warning ul {
+    list-style-type: "🌸"; /* Sakura bullet */
+    padding-left: 25px;
+    margin-top: 5px;
+}
+.non-negotiable-warning ul li {
+    margin-bottom: 5px;
+}
+
+
+/* --- Quiz Section --- */
+.quiz-container {
+    /* Styles for the quiz area, already covered by shoji-screen-section */
+}
+
+.progress-bar-container {
+    width: 100%;
+    background-color: #e0e0e0; /* Light Grey */
+    border-radius: 10px;
+    margin-bottom: 25px;
+    overflow: hidden; /* Ensure progress bar stays within bounds */
+}
+
+.progress-bar {
+    width: 0%;
+    height: 15px;
+    background-color: #76ff03; /* Bright Green */
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out;
+}
+
+.question-card {
+    min-height: 200px; /* Ensure consistent card height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.question-card h3 {
+    color: #673ab7; /* Deep Purple */
+    margin-bottom: 20px;
+    font-size: 1.4em;
+}
+
+.question-card .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between options */
+}
+
+.question-card label {
+    background-color: #e3f2fd; /* Lightest Sky Blue */
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: block; /* Make label take full width */
+    text-align: left;
+    border: 1px solid #bbdefb; /* Lighter blue border */
+}
+
+.question-card input[type="radio"],
+.question-card input[type="checkbox"] {
+    margin-right: 10px;
+    accent-color: #e91e63; /* Deeper Pink for radio/checkbox */
+}
+
+.question-card label:hover {
+    background-color: #bbdefb; /* Lighter Sky Blue */
+}
+
+.question-card select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #b0bec5; /* Blue Grey */
+    background-color: white;
+    font-family: inherit;
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+.navigation-buttons {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigation-buttons button {
+    background-color: #ffab91; /* Light Peach */
+    color: #3e2723; /* Dark Brown */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.navigation-buttons button:hover {
+    background-color: #ff8a65; /* Darker Peach */
+}
+
+.navigation-buttons button#prevBtn {
+    background-color: #cfd8dc; /* Blue Grey Light */
+}
+.navigation-buttons button#prevBtn:hover {
+    background-color: #b0bec5; /* Blue Grey */
+}
+
+
+/* --- Result Section --- */
+.result-container {
+    /* Styles for the result area, already covered by shoji-screen-section */
+}
+
+.score-display {
+    font-size: 3em;
+    font-weight: bold;
+    color: #ff4081; /* Pink Accent */
+    margin: 20px 0;
+    animation: score-appear 1s ease-out;
+}
+
+@keyframes score-appear {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.result-animation img {
+    width: 100px; /* Adjust as needed */
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.poetic-message {
+    font-size: 1.3em;
+    color: #7b1fa2; /* Purple */
+    margin-bottom: 25px;
+    min-height: 50px; /* Space for message */
+    font-style: italic;
+}
+
+/* Cherry Blossom Animation (Simple Example - can be more complex with JS) */
+.cherry-blossom-animation {
+    height: 100px; /* Adjust as needed */
+    position: relative;
+    overflow: hidden; /* Keep blossoms contained */
+    margin-bottom: 20px;
+}
+
+.sakura-petal {
+    position: absolute;
+    background-image: url('../assets/images/sakura_petal.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 20px; /* Size of petal */
+    height: 20px;
+    animation: fall linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.7; }
+    100% { transform: translateY(120px) rotate(360deg); opacity: 0; }
+}
+
+/* --- Footer --- */
+.footer {
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.9em;
+    color: #777;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lofi-toggle-container {
+    display: flex;
+    align-items: center;
+}
+
+.lofi-toggle-container .icon {
+    margin-right: 8px;
+    cursor: pointer; /* Indicate it's clickable (to toggle music) */
+}
+
+/* --- Generic Switch (for toggles) --- */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px; /* Adjusted width */
+    height: 28px; /* Adjusted height */
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px; /* Adjusted size */
+    width: 20px;  /* Adjusted size */
+    left: 4px;    /* Adjusted position */
+    bottom: 4px;  /* Adjusted position */
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #81c784; /* Soft Green */
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #81c784;
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px); /* Adjusted translation */
+}
+
+.slider.round {
+    border-radius: 28px; /* Adjusted for height */
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .hero-section h1 {
+        font-size: 1.8em;
+    }
+
+    .hero-section .tagline {
+        font-size: 1em;
+    }
+
+    .cta-button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    .question-card h3 {
+        font-size: 1.2em;
+    }
+
+    .score-display {
+        font-size: 2.5em;
+    }
+
+    .poetic-message {
+        font-size: 1.1em;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .non-negotiable-toggle-container {
+        justify-content: center; /* Center on smaller screens */
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section h1 {
+        font-size: 1.6em;
+    }
+    .navigation-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .navigation-buttons button {
+        width: 100%;
+    }
+}
+
+/* --- Utility Classes --- */
+.hidden {
+    display: none !important;
+}
+
+/* --- Cute Pixel Art Icons (Placeholder - use actual small pixel art) --- */
+/* Example: Replace with actual <img> tags if using pixel art files */
+/* .pixel-icon-heart::before { content: "❤"; font-family: "Arial"; color: #ff7b7b; } */
+/* .pixel-icon-next::before { content: "▶"; font-family: "Arial"; color: #76c7c0; } */
+
+/* Auto-fail message styling */
+.auto-fail-message {
+    background-color: #ffcdd2; /* Light Pink/Red */
+    color: #c62828; /* Dark Red */
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    text-align: center;
+}
+.auto-fail-message h2 {
+    margin-top: 0;
+    color: #b71c1c; /* Very Dark Red */
+}
+.auto-fail-message p {
+    margin-bottom: 20px;
+}

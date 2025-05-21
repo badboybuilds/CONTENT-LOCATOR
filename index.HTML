@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MIT Style Pro Website - the great yash</title>
+  <style>
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fafafa;
+      color: #222;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    /* --- Top Navbar --- */
+    nav.top-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      background: white;
+      box-shadow: 0 1px 7px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      z-index: 10000;
+      user-select: none;
+    }
+
+    nav.top-nav .logo {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #bf0a30;
+      letter-spacing: 1.2px;
+      margin-right: 50px;
+      cursor: default;
+    }
+
+    nav.top-nav ul.menu {
+      list-style: none;
+      display: flex;
+      gap: 35px;
+      margin: 0;
+      padding: 0;
+      flex-grow: 1;
+    }
+
+    nav.top-nav ul.menu li a {
+      position: relative;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      color: #222;
+      padding-bottom: 6px;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    nav.top-nav ul.menu li a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 3px;
+      bottom: 0;
+      left: 0;
+      background-color: #bf0a30;
+      transition: width 0.35s ease;
+      border-radius: 1.5px;
+    }
+
+    nav.top-nav ul.menu li a:hover::after {
+      width: 100%;
+    }
+
+    nav.top-nav ul.menu li a:hover {
+      color: #bf0a30;
+    }
+
+    /* --- Sidebar --- */
+    aside.sidebar {
+      position: fixed;
+      top: 60px; /* below nav */
+      left: 0;
+      width: 220px;
+      height: calc(100vh - 60px);
+      background: white;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.07);
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      z-index: 9999;
+    }
+
+    aside.sidebar h2 {
+      font-weight: 700;
+      color: #bf0a30;
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      user-select: none;
+    }
+
+    aside.sidebar a {
+      text-decoration: none;
+      color: #444;
+      font-weight: 600;
+      font-size: 15px;
+      position: relative;
+      padding-left: 12px;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    aside.sidebar a::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: #bf0a30;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    aside.sidebar a:hover {
+      color: #bf0a30;
+    }
+
+    aside.sidebar a:hover::before {
+      opacity: 1;
+    }
+
+    /* --- Main Content Area --- */
+    main.content {
+      margin-left: 240px;
+      margin-top: 80px;
+      padding: 0 40px 60px 40px;
+      max-width: 900px;
+      line-height: 1.6;
+    }
+
+    main.content h1, main.content h2 {
+      color: #bf0a30;
+      margin-bottom: 15px;
+      user-select: none;
+    }
+
+    main.content p {
+      font-size: 17px;
+      margin-bottom: 22px;
+      color: #333;
+    }
+
+    main.content a.underline-hover {
+      position: relative;
+      color: #222;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    main.content a.underline-hover::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2.5px;
+      bottom: -3px;
+      left: 0;
+      background-color: #bf0a30;
+      transition: width 0.35s ease;
+      border-radius: 1px;
+    }
+
+    main.content a.underline-hover:hover {
+      color: #bf0a30;
+    }
+
+    main.content a.underline-hover:hover::after {
+      width: 100%;
+    }
+
+   #right-arrow {
+  position: fixed;
+  left: 30px;
+  bottom: 50px;
+  font-size: 42px;
+  color: #bf0a30;
+  cursor: pointer;
+  user-select: none;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  
+  /* Slide in from left */
+  transform: translateX(-40px);
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  
+  /* Neon glow vibe */
+  text-shadow:
+    0 0 6px #bf0a30,
+    0 0 12px #bf0a30,
+    0 0 18px #ff3b3b,
+    0 0 30px #ff3b3b;
+}
+
+#right-arrow.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+  
+  /* Pulsing neon glow animation */
+  animation: pulseGlow 2.2s infinite ease-in-out;
+}
+
+#right-arrow:hover {
+  color: #ff3b3b;
+  text-shadow:
+    0 0 10px #ff3b3b,
+    0 0 20px #ff3b3b,
+    0 0 30px #ff3b3b,
+    0 0 40px #ff3b3b,
+    0 0 50px #ff3b3b;
+  transform: scale(1.15) translateX(0);
+  transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    text-shadow:
+      0 0 6px #bf0a30,
+      0 0 12px #bf0a30,
+      0 0 18px #ff3b3b,
+      0 0 30px #ff3b3b;
+  }
+  50% {
+    text-shadow:
+      0 0 12px #ff3b3b,
+      0 0 24px #ff3b3b,
+      0 0 36px #ff6b6b,
+      0 0 45px #ff6b6b;
+  }
+}
+
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 900px) {
+      aside.sidebar {
+        display: none;
+      }
+      main.content {
+        margin-left: 0;
+        margin-top: 100px;
+        padding: 0 20px;
+      }
+      nav.top-nav {
+        padding: 0 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="top-nav" aria-label="Primary navigation">
+    <div class="logo">THE GREAT YASH</div>
+    <ul class="menu" role="menubar">
+      <li role="none"><a href="#home" role="menuitem" tabindex="0">Home</a></li>
+      <li role="none"><a href="E-portfolio/home/home/index.html" role="menuitem" tabindex="0">About</a></li>
+      <li role="none"><a href="projects.html" role="menuitem" tabindex="0">Projects</a></li>
+      <li role="none"><a href="#blog" role="menuitem" tabindex="0">Blog</a></li>
+      <li role="none"><a href="#contact" role="menuitem" tabindex="0">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" aria-label="Sidebar navigation">
+    <h2>Quick Links</h2>
+    <a href="#home">🏠 Home</a>
+    <a href="#about">👤 About Me</a>
+    <a href="#projects">🚀 Projects</a>
+    <a href="#blog">📝 Blog</a>
+    <a href="#contact">📬 Contact</a>
+  </aside>
+
+  <!-- Main content -->
+  <main class="content">
+    <section id="home" tabindex="-1">
+      <h1>Welcome to my sleek MIT-inspired site</h1>
+      <p>
+        This is where I showcase my journey as <strong>the great yash</strong> — student, gym bro, YouTuber, and future MIT grad.
+        Feel free to explore the <a href="#projects" class="underline-hover">projects</a> I’m building and the
+        <a href="#blog" class="underline-hover">blog posts</a> where I drop knowledge bombs.
+      </p>
+    </section>
+
+    <section id="about" tabindex="-1">
+      <h2>About Me</h2>
+      <p>
+        I’m a class 8th student grinding hard with a dream to get into MIT, inspired by legends like Sundar Pichai.
+        Gym life fuels my fire, and I’m building a physique like Toji Fushiguro while leveling up my programming skills.
+      </p>
+    </section>
+
+    <section id="projects" tabindex="-1">
+      <h2>Projects</h2>
+      <p>
+        Right now, I’m working on an AI tool that scans images of wrong questions and makes quizzes to fix weak spots.
+        Check out my <a href="https://github.com" target="_blank" class="underline-hover">GitHub</a> for more.
+      </

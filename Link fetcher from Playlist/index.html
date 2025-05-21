@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Playlist Link Extractor (No API)</title>
+  <style>
+    body {
+      background: #121212;
+      color: white;
+      font-family: monospace;
+      padding: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 300px;
+      background: #1e1e1e;
+      color: #00ffcc;
+      font-family: monospace;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      padding: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-weight: bold;
+      background: #00ffcc;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      color: #121212;
+      margin: 5px 0;
+    }
+    .result a {
+      color: #1e90ff;
+      text-decoration: none;
+      display: block;
+      margin: 4px 0;
+    }
+    #copyStatus {
+      margin-top: 10px;
+      color: limegreen;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<h2>🎯 YouTube Playlist Video Link Extractor (No API)</h2>
+
+<p>📋 Step 1: Open the playlist → Right-click → View Page Source → Copy All → Paste below</p>
+<textarea id="sourceCode" placeholder="Paste full YouTube playlist HTML source code here..."></textarea>
+
+<button onclick="extractLinks()">Extract Video Links</button>
+<button id="copyBtn" style="display:none;" onclick="copyAll()">📋 Copy All Links</button>
+<div class="result" id="result"></div>
+<div id="copyStatus"></div>
+
+<script>
+  let globalLinks = [];
+
+  function extractLinks() {
+    const html = document.getElementById('sourceCode').value;
+    const resultDiv = document.getElementById('result');
+    const copyBtn = document.getElementById('copyBtn');
+    const copyStatus = document.getElementById('copyStatus');
+
+    resultDiv.innerHTML = '';
+    copyStatus.textContent = '';
+    globalLinks = [];
+
+    const videoIds = [...new Set([...html.matchAll(/"videoId":"(.*?)"/g)].map(m => m[1]))];
+
+    if (videoIds.length === 0) {
+      resultDiv.innerHTML = '<p>❌ No video links found. Did you paste the full HTML source correctly?</p>';
+      copyBtn.style.display = 'none';
+      return;
+    }
+
+    resultDiv.innerHTML = `<p>✅ Found ${videoIds.length} video links:</p>`;
+    videoIds.forEach((id, i) => {
+      const url = `https://www.youtube.com/watch?v=${id}`;
+      globalLinks.push(url);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.textContent = `${i + 1}. ${url}`;
+      a.target = '_blank';
+      resultDiv.appendChild(a);
+    });
+
+    copyBtn.style.display = 'inline-block';
+  }
+
+  function copyAll() {
+    if (globalLinks.length === 0) return;
+
+    const allText = globalLinks.join('\n');
+    navigator.clipboard.writeText(allText)
+      .then(() => {
+        document.getElementById('copyStatus').textContent = "📋 All links copied!";
+      })
+      .catch(err => {
+        document.getElementById('copyStatus').textContent = "❌ Failed to copy.";
+      });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>💸 PPP-Based Salary Comparator</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #2d2f4a);
+      color: #fff;
+      padding: 3rem;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 2.5rem;
+      max-width: 500px;
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-weight: 600;
+      color: #00ffe5;
+      text-shadow: 0 0 10px rgba(0, 255, 229, 0.5);
+    }
+
+    label {
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 0.75rem;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      background: #00ffe5;
+      color: #1e1e2f;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 255, 229, 0.5);
+    }
+
+    button:hover {
+      background: #00ccb8;
+      box-shadow: 0 0 25px rgba(0, 255, 229, 0.75);
+    }
+
+    .result {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #00ffb3;
+      text-shadow: 0 0 10px rgba(0, 255, 179, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>💸 PPP-Based Salary Comparator</h2>
+    
+    <label for="amountFrom">Min Salary:</label>
+    <input type="number" id="amountFrom" placeholder="Enter min salary" />
+
+    <label for="amountTo">Max Salary:</label>
+    <input type="number" id="amountTo" placeholder="Enter max salary" />
+
+    <label for="from">From Country:</label>
+    <select id="from">
+      <option value="india">India 🇮🇳</option>
+      <option value="japan">Japan 🇯🇵</option>
+      <option value="usa">USA 🇺🇸</option>
+    </select>
+
+    <label for="to">To Country:</label>
+    <select id="to">
+      <option value="india">India 🇮🇳</option>
+      <option value="japan">Japan 🇯🇵</option>
+      <option value="usa">USA 🇺🇸</option>
+    </select>
+
+    <button onclick="convertPPP()">Compare PPP Salary</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    // PPP conversion table (based on IMF, World Bank est.)
+    const ppp = {
+      india: { india: 1, japan: 2.8, usa: 0.34 },
+      japan: { india: 0.36, japan: 1, usa: 0.12 },
+      usa:   { india: 2.93, japan: 8.2, usa: 1 }
+    };
+
+    function convertPPP() {
+      const minAmount = parseFloat(document.getElementById("amountFrom").value);
+      const maxAmount = parseFloat(document.getElementById("amountTo").value);
+      const from = document.getElementById("from").value;
+      const to = document.getElementById("to").value;
+
+      const resultEl = document.getElementById("result");
+
+      if (isNaN(minAmount) || isNaN(maxAmount) || minAmount <= 0 || maxAmount <= 0 || minAmount > maxAmount) {
+        resultEl.innerText = "⚠️ Please enter a valid salary range.";
+        return;
+      }
+
+      const conversionRate = ppp[from][to];
+      const adjustedMin = minAmount * conversionRate;
+      const adjustedMax = maxAmount * conversionRate;
+
+      resultEl.innerHTML = `
+        🧠 Based on PPP, to maintain the same standard of living:<br><br>
+        <strong>${from.toUpperCase()}</strong> salary of <strong>${minAmount} - ${maxAmount}</strong> →  
+        you need <strong>${adjustedMin.toFixed(2)} - ${adjustedMax.toFixed(2)}</strong> in <strong>${to.toUpperCase()}</strong>.
+      `;
+    }
+  </script>
+</body>
+</html>

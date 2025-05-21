@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>the great yash</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: #fdfdfd;
+      color: #111;
+      padding: 30px;
+    }
+
+    header {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #bf0a30;
+      margin-bottom: 20px;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .project-card {
+      font-size: 0.85rem;
+      color: #333;
+      text-decoration: none;
+      padding: 10px 5px;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .project-card:hover {
+      color: #bf0a30;
+    }
+
+    .project-card h3 {
+      margin-bottom: 3px;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .project-card p {
+      font-size: 0.75rem;
+      color: #666;
+      line-height: 1.3;
+    }
+
+    .project-card::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: #bf0a30;
+      width: 0;
+      transition: width 0.4s ease-in-out;
+    }
+
+    .project-card:hover::after {
+      width: 100%;
+    }
+
+    @media (max-width: 500px) {
+      body {
+        padding: 20px;
+      }
+      .projects-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>the great yash</header>
+
+<div class="projects-grid">
+  <a href="Japan - India salary convertor/index.html" class="project-card" target="_blank">
+    <h3>Salary Converter</h3>
+    <p>Compare cost of living in Japan vs India.</p>
+  </a>
+
+  <a href="30 day challenge/index.html" class="project-card" target="_blank">
+    <h3>Life Challenges</h3>
+    <p>Take 7/30 day improvement missions.</p>
+  </a>
+
+  <a href="#" class="project-card" target="_blank">
+    <h3>Study Tracker</h3>
+    <p>Track deep study sessions & streaks.</p>
+  </a>
+
+  <a href="Japanese Grammar/index.html" class="project-card" target="_blank">
+    <h3>Learn Japanese N5-N2</h3>
+    <p>This contains all video courses.</p>
+  </a>
+</div>
+
+</body>
+</html>

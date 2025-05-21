@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>運命の人を見つけるためのクイズ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/images/sakura_petal.png" type="image/png">
+</head>
+<body>
+    <div class="container">
+        <div class="non-negotiable-toggle-container">
+            <label class="switch">
+                <input type="checkbox" id="nonNegotiableToggle">
+                <span class="slider round"></span>
+            </label>
+            <span>「譲れない条件」を常に表示</span>
+        </div>
+
+        <div id="nonNegotiableWarning" class="non-negotiable-warning" style="display: none;">
+            <p><strong><img src="assets/images/warning_icon.png" alt="Warning" class="icon"> 注意：</strong>以下の質問には「譲れない条件」が含まれています。正直にお答えください。</p>
+            <ul>
+                <li>日本語を学び、JLPT N1に合格する意思はありますか？ (必須)</li>
+                <li>時期が来たら日本に移住する意思はありますか？ (必須)</li>
+                <li>私に対して怒って話を無視することはありますか？ (「いいえ」が必須)</li>
+            </ul>
+        </div>
+
+        <header class="hero-section">
+            <h1>「運命の人を見つけるための10の質問」</h1>
+            <p class="tagline">私の隣に咲く、一輪の花を見つけたい。</p>
+            <button id="startQuizBtn" class="cta-button">クイズを始める <img src="assets/images/heart_arrow_icon.png" alt="" class="icon"></button>
+        </header>
+
+        <main id="quizSection" class="quiz-container" style="display: none;">
+            <div class="progress-bar-container">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+            <div id="questionContainer" class="question-card shoji-screen-section">
+                </div>
+            <div class="navigation-buttons">
+                <button id="prevBtn" style="display: none;">戻る</button>
+                <button id="nextBtn">次へ</button>
+            </div>
+        </main>
+
+        <section id="resultSection" class="result-container shoji-screen-section" style="display: none;">
+            <h2 id="resultTitle"></h2>
+            <div id="compatibilityScore" class="score-display"></div>
+            <div id="resultAnimation" class="result-animation">
+                <img src="assets/images/matching_hearts.gif" alt="Matching Hearts" style="display:none;">
+            </div>
+            <p id="poeticMessage" class="poetic-message"></p>
+            <div class="cherry-blossom-animation">
+                </div>
+            <button id="applyAgainBtn" class="cta-button">もう一度試す <img src="assets/images/refresh_icon.png" alt="" class="icon"></button>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2025 [Your Name/Nickname] - Finding My Sakura</p>
+            <div class="lofi-toggle-container">
+                <img src="assets/images/music_icon.png" alt="Music" class="icon" id="musicIcon">
+                <label class="switch">
+                    <input type="checkbox" id="lofiToggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <audio id="lofiMusic" src="assets/images/audio/Marino - Crush (Lyrics   AMV) (ft. kiki wera)-Efl_FXgnFH0.m4a" loop></audio>
+        </footer>
+    </div>
+
+    <div id="foxMaskCursor">
+        <img src="assets/images/fox_mask_cursor.png" alt="Fox Mask">
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
