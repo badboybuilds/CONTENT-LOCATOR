@@ -726,22 +726,26 @@ function getLastWatched(level) {
     return parseInt(localStorage.getItem(`last-${level}`)) || 1;
 }
 
-// --- Modified loadLesson to also save progress ---
 function loadLesson(level, lessonId) {
     const videoFrame = document.getElementById(level + '-video');
     const lessons = courses[level].lessons;
     const lesson = lessons.find(l => l.id === lessonId);
+
     if (lesson) {
         videoFrame.src = lesson.url;
 
-        // Save progress to localStorage
-        saveLastWatched(level, lessonId);
+        // Save progress
+        localStorage.setItem(`last-${level}`, lessonId);
 
         // Update progress bar
         const progress = Math.round((lessonId / lessons.length) * 100);
         updateProgress(level, progress);
+
+        // Highlight active button
+        highlightActiveButton(level, lessonId);
     }
 }
+
 
 // --- Modify loadCourse to resume last watched lesson ---
 function loadCourse(level) {
