@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Binary ↔ English Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #f1f1f1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    h1 {
+      color: #00ffcc;
+      margin-bottom: 1rem;
+    }
+    textarea {
+      width: 90%;
+      max-width: 600px;
+      height: 120px;
+      margin: 1rem 0;
+      padding: 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      background: #1e1e1e;
+      color: #00ffcc;
+      resize: vertical;
+    }
+    button {
+      padding: 0.8rem 2rem;
+      margin: 0.5rem;
+      border: none;
+      background: #00ffcc;
+      color: #121212;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #00c2a8;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 Binary ↔ English Converter</h1>
+
+  <textarea id="inputText" placeholder="Enter English or Binary here..."></textarea>
+
+  <div>
+    <button onclick="englishToBinary()">English ➤ Binary</button>
+    <button onclick="binaryToEnglish()">Binary ➤ English</button>
+    <button onclick="clearText()">Clear</button>
+  </div>
+
+  <textarea id="outputText" placeholder="Converted result will appear here..." readonly></textarea>
+
+  <script>
+    function englishToBinary() {
+      const input = document.getElementById("inputText").value;
+      const binary = input
+        .split("")
+        .map(char => char.charCodeAt(0).toString(2).padStart(8, '0'))
+        .join(" ");
+      document.getElementById("outputText").value = binary;
+    }
+
+    function binaryToEnglish() {
+      const input = document.getElementById("inputText").value.trim();
+      const english = input
+        .split(" ")
+        .map(bin => String.fromCharCode(parseInt(bin, 2)))
+        .join("");
+      document.getElementById("outputText").value = english;
+    }
+
+    function clearText() {
+      document.getElementById("inputText").value = "";
+      document.getElementById("outputText").value = "";
+    }
+  </script>
+
+</body>
+</html>

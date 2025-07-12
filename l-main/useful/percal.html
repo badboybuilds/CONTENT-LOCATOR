@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎯 Yash's Percentage Calculator 🎯</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: white;
+      text-align: center;
+      margin: 50px;
+    }
+    .container {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      width: 90%;
+      max-width: 350px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 22px;
+    }
+    .input-group {
+      margin: 10px 0;
+      text-align: left;
+    }
+    label {
+      display: block;
+      font-size: 16px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+    }
+    button {
+      background-color: #ff9800;
+      color: white;
+      font-size: 16px;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #e68900;
+    }
+    .result {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+    .progress-bar {
+      width: 100%;
+      background: #333;
+      border-radius: 5px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    .progress {
+      height: 20px;
+      background: #ff9800;
+      width: 0%;
+      transition: width 0.5s;
+    }
+    .error {
+      color: #ff4444;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 Yash's Percentage Calculator 🎯</h1>
+    <form id="marksForm">
+      <div class="input-group">
+        <label for="english">English:</label>
+        <input type="number" id="english" max="80" min="0" step="0.5" required>
+      </div>
+      <div class="input-group">
+        <label for="hindi">Hindi:</label>
+        <input type="number" id="hindi" max="80" min="0" step="0.5" required>
+      </div>
+      <div class="input-group">
+        <label for="maths">Maths:</label>
+        <input type="number" id="maths" max="80" min="0" step="0.5" required>
+      </div>
+      <div class="input-group">
+        <label for="science">Science:</label>
+        <input type="number" id="science" max="80" min="0" step="0.5" required>
+      </div>
+      <div class="input-group">
+        <label for="socialStudies">Social Studies:</label>
+        <input type="number" id="socialStudies" max="80" min="0" step="0.5" required>
+      </div>
+      <div class="input-group">
+        <label for="sanskrit">Sanskrit:</label>
+        <input type="number" id="sanskrit" max="80" min="0" step="0.5" required>
+      </div>
+      <div id="errorMessage" class="error"></div>
+      <button type="submit">Calculate Percentage</button>
+    </form>
+    <div id="result" class="result"></div>
+    <div class="progress-bar"><div class="progress" id="progress"></div></div>
+  </div>
+
+  <script>
+    document.getElementById("marksForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      
+      const subjects = ["english", "hindi", "maths", "science", "socialStudies", "sanskrit"];
+      const maxMarksPerSubject = 80;
+      const totalMaxMarks = subjects.length * maxMarksPerSubject;
+      let obtainedMarks = 0;
+      let errorMessage = document.getElementById("errorMessage");
+      errorMessage.textContent = "";
+      
+      for (let subject of subjects) {
+        let marks = parseFloat(document.getElementById(subject).value);
+        if (isNaN(marks) || marks > maxMarksPerSubject || marks < 0) {
+          errorMessage.textContent = `Marks for ${subject} must be between 0 and ${maxMarksPerSubject}`;
+          return;
+        }
+        obtainedMarks += marks;
+      }
+      
+      let percentage = (obtainedMarks / totalMaxMarks) * 100;
+      let resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = `<h2>Your Percentage: ${percentage.toFixed(2)}%</h2>`;
+      document.getElementById("progress").style.width = `${percentage}%`;
+      
+      let feedback = "";
+      if (percentage > 95) feedback = "🌟 LEGENDARY! You’re unstoppable! 🌟";
+      else if (percentage > 90) feedback = "🔥 Incredible! You’re at the top of your game! 🔥";
+      else if (percentage > 85) feedback = "🚀 Amazing progress! Keep pushing! 🚀";
+      else if (percentage > 80) feedback = "💪 Great work! Almost elite level! 💪";
+      else if (percentage > 75) feedback = "💎 Solid effort! You’re improving fast! 💎";
+      else if (percentage > 70) feedback = "📊 Keep grinding! You’re leveling up! 📊";
+      else if (percentage > 65) feedback = "💪 You’ve got potential! Keep at it! 💪";
+      else if (percentage > 60) feedback = "🎲 Not bad! Time to sharpen your skills! 🎲";
+      else feedback = "⚠ Time to grind harder! Let’s go! ⚠";
+      
+      resultDiv.innerHTML += `<p>${feedback}</p>`;
+      document.getElementById("marksForm").reset();
+    });
+  </script>
+</body>
+</html>

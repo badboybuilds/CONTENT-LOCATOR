@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zen Video Time Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      background: linear-gradient(to top, #f8ede3, #dfe6e9);
+      color: #3c3c3c;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 28px;
+      margin-bottom: 30px;
+      color: #4b3832;
+    }
+
+    .inputs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    input[type="number"] {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background-color: #fff7f0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-size: 18px;
+      width: 80px;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #b5838d;
+    }
+
+    .buttons button {
+      margin: 6px;
+      padding: 10px 22px;
+      font-size: 16px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      background-color: #a1a1aa;
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .buttons button:hover {
+      background-color: #9b5de5;
+      transform: scale(1.03);
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+    }
+
+    .result.show {
+      opacity: 1;
+    }
+
+    .quote {
+      position: absolute;
+      bottom: 30px;
+      font-size: 14px;
+      color: #7f7f7f;
+      font-style: italic;
+    }
+
+    /* Sakura petals effect */
+    .petal {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background-image: url('https://pngimg.com/uploads/cherry_blossom/cherry_blossom_PNG17.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: fall 10s linear infinite;
+  opacity: 0.8;
+}
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        left: calc(100% * var(--rand));
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        left: calc(100% * var(--rand));
+      }
+    }
+  </style>
+
+</head>
+<body>
+  <h1>🧘‍♀️ Zen Video Time Calculator</h1>
+
+  <div class="inputs">
+    <input type="number" id="hours" placeholder="hr" min="0">
+    <input type="number" id="minutes" placeholder="min" min="0">
+    <input type="number" id="seconds" placeholder="sec" min="0">
+  </div>
+
+  <div class="buttons">
+    <button onclick="addTime()">Add ➕</button>
+    <button onclick="calculateTotal()">Calculate ⏱️</button>
+    <button onclick="resetAll()">Reset ♻️</button>
+  </div>
+
+  <div class="result" id="result"></div>
+  <div class="quote">“The quieter you become, the more you are able to hear.” – Rumi</div>
+
+  <!-- Sakura petals -->
+  <script>
+    for (let i = 0; i < 15; i++) {
+      const petal = document.createElement("div");
+      petal.classList.add("petal");
+      petal.style.setProperty("--rand", Math.random());
+      petal.style.left = `${Math.random() * 100}%`;
+      petal.style.animationDelay = `${Math.random() * 5}s`;
+      document.body.appendChild(petal);
+    }
+
+    let timesInSeconds = [];
+
+    function addTime() {
+      const hr = parseInt(document.getElementById('hours').value) || 0;
+      const min = parseInt(document.getElementById('minutes').value) || 0;
+      const sec = parseInt(document.getElementById('seconds').value) || 0;
+      const totalSeconds = hr * 3600 + min * 60 + sec;
+
+      if (totalSeconds > 0) {
+        timesInSeconds.push(totalSeconds);
+        clearInputs();
+        showResult(`🌸 Added: ${hr}h ${min}m ${sec}s`);
+      } else {
+        alert('Please enter a time to add 🍵');
+      }
+    }
+
+    function calculateTotal() {
+      const total = timesInSeconds.reduce((sum, t) => sum + t, 0);
+      const hours = Math.floor(total / 3600);
+      const minutes = Math.floor((total % 3600) / 60);
+      const seconds = total % 60;
+      showResult(`🕰️ Total Time: ${hours} hr ${minutes} min ${seconds} sec`);
+    }
+
+    function resetAll() {
+      timesInSeconds = [];
+      clearInputs();
+      showResult(`🌀 Cleared. Like a still pond.`);
+    }
+
+    function clearInputs() {
+      document.getElementById('hours').value = '';
+      document.getElementById('minutes').value = '';
+      document.getElementById('seconds').value = '';
+    }
+
+    function showResult(message) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.textContent = message;
+      resultDiv.classList.add('show');
+    }
+  </script>
+</body>
+</html>

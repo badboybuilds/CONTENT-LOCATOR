@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎯 Dream College Calculator</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #121212;
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: #00f7ff;
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    label {
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    select, input {
+      margin-top: 5px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      width: 250px;
+      background: #1f1f1f;
+      color: #ffffff;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: #00f7ff;
+      color: black;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #00d6e0;
+    }
+
+    #result {
+      margin-top: 35px;
+      font-size: 18px;
+      text-align: center;
+      background-color: #1f1f1f;
+      padding: 25px;
+      border-radius: 12px;
+      width: 320px;
+      box-shadow: 0 0 15px #00f7ff50;
+    }
+  </style>
+</head>
+<body>
+  <h1>Dream College Calculator</h1>
+
+  <label>📚 Average Daily Study Hours:</label>
+  <input type="number" id="studyHours" placeholder="e.g. 6" min="0" max="24"/>
+
+  <label>🚀 Started preparing from (Class):</label>
+  <select id="startClass">
+    <option value="6">Class 6</option>
+    <option value="7">Class 7</option>
+    <option value="8">Class 8</option>
+    <option value="9">Class 9</option>
+    <option value="10">Class 10</option>
+    <option value="11">Class 11</option>
+  </select>
+
+  <label>🏫 Do you go to school?</label>
+  <select id="goSchool">
+    <option value="yes">Yes</option>
+    <option value="no">No</option>
+  </select>
+
+  <label>🎓 Dream College:</label>
+  <select id="college">
+    <option value="IIT Bombay">IIT Bombay</option>
+    <option value="IIT Delhi">IIT Delhi</option>
+    <option value="MIT">MIT</option>
+    <option value="Harvard">Harvard</option>
+    <option value="Stanford">Stanford</option>
+    <option value="UTokyo">University of Tokyo</option>
+    <option value="Kyoto">University of Kyoto</option>
+  </select>
+
+  <label>📅 In which year will you be in Class 12?</label>
+  <input type="number" id="class12Year" placeholder="e.g. 2027" />
+
+  <button onclick="calculate()">Calculate My Chances</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculate() {
+      const studyHours = parseFloat(document.getElementById("studyHours").value);
+      const startClass = parseInt(document.getElementById("startClass").value);
+      const goSchool = document.getElementById("goSchool").value;
+      const college = document.getElementById("college").value;
+      const class12Year = parseInt(document.getElementById("class12Year").value);
+      const currentYear = new Date().getFullYear();
+  
+      let score = 0;
+  
+      // 🎓 Study hours score
+      if (studyHours < 3) score -= 30;
+      else if (studyHours < 5) score += 0;
+      else if (studyHours <= 8) score += 10;
+      else if (studyHours <= 12) score += 20;
+      else score += 25;
+  
+      // ⏳ Prep years score
+      const yearsPrep = 12 - startClass;
+      if (yearsPrep >= 5) score += 20;
+      else score += yearsPrep * 5;
+  
+      // 🏫 School effect
+      if (goSchool === "no") score += 10;
+      else score -= 10;
+  
+      // 😴 Sleep deprivation penalty
+      if (goSchool === "yes" && studyHours > 5) score -= 15;
+  
+      // 📅 Time left score
+      const yearsLeft = class12Year - currentYear;
+      if (yearsLeft >= 4) score += 20;
+      else score += yearsLeft * 5;
+  
+      // 🎓 College difficulty
+      if (college === "MIT" || college === "Stanford") score -= 25;
+      else if (college === "Harvard") score -= 30;
+      else if (college === "UTokyo" || college === "Kyoto") score -= 10;
+      // IITs = no penalty
+  
+      // 🧠 Normalize score
+      const chance = Math.min(99, Math.max(0, Math.round((score / 90) * 100)));
+  
+      // Output
+      const result = document.getElementById("result");
+      result.innerHTML = `
+        🎯 Dream College: <b>${college}</b><br>
+        📊 Your estimated chances: <b>${chance}%</b><br>
+        ${goSchool === "yes" && studyHours > 5 ? "⚠️ Sleep deprivation detected. Optimize your schedule!" : "✅ Balanced mindset is your superpower."}
+      `;
+    }
+  </script>
+  
+</body>
+</html>

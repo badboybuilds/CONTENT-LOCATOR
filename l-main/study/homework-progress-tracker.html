@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework Progress Timeline</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0d1117, #161b22);
+            color: #c9d1d9;
+            text-align: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: rgba(22, 27, 34, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out;
+        }
+        .container:hover {
+            transform: scale(1.02);
+        }
+        h1 {
+            color: #58a6ff;
+            text-shadow: 2px 2px 8px rgba(88, 166, 255, 0.5);
+            animation: fadeIn 1s ease-in-out;
+        }
+        .task {
+            background: #21262d;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: 0.3s ease-in-out;
+        }
+        .task:hover {
+            background: #30363d;
+            transform: translateY(-3px);
+        }
+        .task input {
+            margin-right: 10px;
+        }
+        .progress {
+            margin-top: 20px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #30363d;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(135deg, #58a6ff, #0d6efd);
+            transition: width 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Holiday Homework Progress</h1>
+        <div class="tasks">
+            <div class="task">
+                <label><input type="checkbox" class="task-checkbox"> Complete Word Book (60 mins)</label>
+            </div>
+            <div class="task">
+                <label><input type="checkbox" class="task-checkbox"> Write Summary of Novel (80 mins)</label>
+            </div>
+            <div class="task">
+                <label><input type="checkbox" class="task-checkbox"> Solve ICPQ (190 mins)</label>
+            </div>
+            <div class="task">
+                <label><input type="checkbox" class="task-checkbox"> Learn Tables, Cubes, Squares (15 mins)</label>
+            </div>
+            <div class="task">
+                <label><input type="checkbox" class="task-checkbox"> Science Q&A (200 mins)</label>
+            </div>
+            <div class="task">
+                <label><input type="checkbox" class="task-checkbox"> SS Question Answer (200 mins)</label>
+            </div>
+            <div class="task">
+                <label><input type="checkbox" class="task-checkbox"> Revise Full Syllabus of Hindi (100 mins)</label>
+            </div>
+        </div>
+        <div class="progress">
+            <p>Progress: <span id="progress-text">0%</span></p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', updateProgress);
+        });
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            const checked = document.querySelectorAll('.task-checkbox:checked').length;
+            const progress = Math.round((checked / checkboxes.length) * 100);
+            document.getElementById('progress-text').innerText = `${progress}%`;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+        }
+    </script>
+</body>
+</html>

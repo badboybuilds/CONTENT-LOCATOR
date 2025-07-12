@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leveling System [MONK MODE]</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> </head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <i class="fas fa-bars" id="sidebar-toggle-btn"></i> <i class="fas fa-rocket"></i>
+            </div>
+            <h1 class="page-title">Leveling system [MONK MODE]</h1>
+            <div class="header-right">
+                <i class="fas fa-share-alt"></i> <i class="fas fa-cog"></i> <i class="fas fa-user-circle"></i>
+            </div>
+        </header>
+
+        <aside class="sidebar" id="sidebar">
+            <ul>
+                <li><a href="#">IIT Management System</a></li>
+                <li><a href="#">Coding</a></li>
+                <li><a href="#">Konoha Skool</a></li>
+                <li><a href="#">School Management...</a></li>
+                <li><a href="#">My Second Brain</a></li>
+                <li><a href="#">Rule Book</a></li>
+                <li><a href="#">Coding</a></li>
+                <li><a href="#">Japanese study resources...</a></li>
+                <li><a href="#">Year Long Roadmap</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <section class="progress-section">
+                <div class="circular-progress-container">
+                    <div class="circular-progress">
+                        <svg class="progress-circle" width="120" height="120">
+                            <circle class="bg" cx="60" cy="60" r="50" stroke-width="10" stroke="#222"></circle>
+                            <circle class="fg" cx="60" cy="60" r="50" stroke-width="10" stroke="#50fa7b" stroke-dasharray="0 314" id="circular-progress-fg"></circle>
+                        </svg>
+                        <div class="progress-center-text" id="circular-progress-text">7:57:38 PM</div>
+                    </div>
+                </div>
+                <div class="progress-bars">
+                    <div class="progress-item" id="year-progress">
+                        <label>Year: 19/365</label>
+                        <div class="bar-container"><div class="bar" style="width: calc(19 / 365 * 100%);" data-value="19" data-total="365"></div></div>
+                        <button class="update-progress-btn" data-target="year" data-increment="5">Update +5</button>
+                    </div>
+                    <div class="progress-item" id="month-progress">
+                        <label>Month: 15/30</label>
+                        <div class="bar-container"><div class="bar" style="width: calc(15 / 30 * 100%);" data-value="15" data-total="30"></div></div>
+                        <button class="update-progress-btn" data-target="month" data-increment="3">Update +3</button>
+                    </div>
+                    <div class="progress-item" id="week-progress">
+                        <label>Week: 2/7</label>
+                        <div class="bar-container"><div class="bar" style="width: calc(2 / 7 * 100%);" data-value="2" data-total="7"></div></div>
+                        <button class="update-progress-btn" data-target="week" data-increment="1">Update +1</button>
+                    </div>
+                    <div class="progress-item" id="day-progress">
+                        <label>Day: 19/24</label>
+                        <div class="bar-container"><div class="bar" style="width: calc(19 / 24 * 100%);" data-value="19" data-total="24"></div></div>
+                        <button class="update-progress-btn" data-target="day" data-increment="2">Update +2</button>
+                    </div>
+                    <div class="progress-item" id="quarter-progress">
+                        <label>Quarter: 15/90</label>
+                        <div class="bar-container"><div class="bar" style="width: calc(15 / 90 * 100%);" data-value="15" data-total="90"></div></div>
+                        <button class="update-progress-btn" data-target="quarter" data-increment="10">Update +10</button>
+                    </div>
+                    <div class="progress-item" id="life-progress">
+                        <label>Life: 13/80</label>
+                        <div class="bar-container"><div class="bar" style="width: calc(13 / 80 * 100%);" data-value="13" data-total="80"></div></div>
+                        <button class="update-progress-btn" data-target="life" data-increment="4">Update +4</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="info-section">
+                <div class="quote-block">
+                    <p>You can try to play but you are never gonna beat me, look the other way what I'm doing ain't easy. Bloody hands stained from people who deceived me.</p>
+                </div>
+                <div class="current-title">
+                    <h2>CURRENT TITLE:</h2>
+                    <p class="title">Tokubetsu Jonin</p>
+                </div>
+                <div class="punishment">
+                    <h2>PUNISHMENT:</h2>
+                    <p>not punished</p>
+                    <p>monk mode activated</p>
+                    <p>way of life</p>
+                </div>
+            </section>
+
+            <section class="currency-section">
+                <div class="primogems">
+                    <i class="fas fa-gem"></i> <span>Primogems</span>
+                    <p class="amount">000145.00 minutes</p>
+                </div>
+                <div class="shop">
+                    <i class="fas fa-shopping-cart"></i> <a href="#">Shop</a>
+                </div>
+                <div class="mora">
+                    <span>Mora:</span>
+                    <p class="amount" id="mora-amount">28</p>
+                </div>
+            </section>
+
+            <section class="table-section">
+                <h2>Table</h2>
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>Skill</th>
+                            <th>Rank</th>
+                            <th>Progress</th>
+                            <th>XP points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Scholar's Path / Tokubetsu Jonin</td>
+                            <td></td>
+                            <td>
+                                <div class="bar-container">
+                                    <div class="bar" style="width: calc(245.3 / 300 * 100%); background-color: #50fa7b;" data-value="245.3" data-total="300" id="skill-progress-bar"></div>
+                                    <span class="progress-value" id="skill-progress-value">245.3</span>
+                                </div>
+                            </td>
+                            <td class="xp-points">245.3</td>
+                        </tr>
+                        </tbody>
+                </table>
+                <button class="add-row-button" id="add-row-btn">+ Add page</button>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

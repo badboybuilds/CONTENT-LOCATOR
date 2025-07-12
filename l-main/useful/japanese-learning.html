@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Material</title>
+    <style>
+        a {
+            text-decoration: none;
+            color: blue;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: red;
+        }
+        .ok {
+            color: #FF4081;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: rgb(145, 96, 192);
+            font-family: Arial, sans-serif;
+            transition: background-color 0.5s ease;
+        }
+        .container {
+            margin: 20px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: transform 0.3s ease;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        button {
+            background-color: #000000;
+            color: #FF4081;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bolder;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: #FF4081;
+            color: #000000;
+            transform: scale(1.05);
+        }
+        .all {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: solid black 2px;
+            border-radius: 20px;
+            width: 80%;
+            align-self: center;
+            margin-top: 20px;
+            padding: 20px;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .all:hover {
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+            transform: scale(1.02);
+        }
+        @media (max-width: 768px) {
+            .all {
+                flex-direction: column;
+                width: 90%;
+            }
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; transition: opacity 0.5s ease;">Study Resources (so I don't forget them when I really need them)</h1>
+    <div class="all">
+        <div class="container">
+            <h2 class="ok">Japanese</h2>
+            <button onclick="window.location.href='https://youtu.be/RF3_DN6kdUQ'">Japanese grammar</button>
+            <button onclick="window.location.href='https://youtu.be/dJL-ftdrSQQ'">Basics Japanese</button>
+            <button onclick="window.location.href='https://youtu.be/Ysgg5zP-s3A'">Fix Japanese speaking</button>
+            <button onclick="window.location.href='https://youtube.com/playlist?list=PLPSfPyOOcp3QYCiQn5K39wxXVqqp7b5GB'">Introduce yourself in Japanese</button>
+            <button onclick="window.location.href='https://youtube.com/playlist?list=PLPSfPyOOcp3Qbu6DT536Y1IkcRLSLbHty'">800 Japanese words course</button>
+            <button onclick="window.location.href='https://youtu.be/ClLThfB2UEM'">Stay motivated to learn Japanese</button>
+            <button onclick="window.location.href='Japanese_CORE2000.pdf'">Japanese core 2000 words</button>
+        </div>
+        <div class="container">
+            <h2 class="ok">Web Development</h2>
+            <button onclick="window.location.href='https://www.youtube.com/watch?v=tVzUXW6siu0'">Sigma Web Development Course</button>
+            <button onclick="window.location.href='https://www.youtube.com/@TheCodingSloth'">Coding Sloth</button>
+            <button onclick="window.location.href='https://youtu.be/GGlzzLTLzxs'">Watch this now you skipped this earlier</button>
+        </div>
+    </div>
+    <footer style="text-align: center; margin-top: 20px; transition: opacity 0.5s ease;">© This theme is inspired by Blackpink</footer>
+</body>
+</html>

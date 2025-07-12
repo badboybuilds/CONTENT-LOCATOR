@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zen Anime Binge Calculator</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Serif JP', serif;
+      background: linear-gradient(to bottom, #fef9f4, #f5e7e1);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+    }
+
+    h1 {
+      font-weight: 400;
+      font-size: 28px;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    .input-area {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+
+    input[type="number"], select {
+      padding: 10px;
+      border: none;
+      border-bottom: 2px solid #c9b1a3;
+      background: transparent;
+      font-size: 18px;
+      width: 220px;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input[type="number"]:focus, select:focus {
+      border-color: #a2785d;
+    }
+
+    label {
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #a2785d;
+      color: white;
+      margin-top: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #8e6145;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .petal {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background-image: url('https://pngimg.com/uploads/cherry_blossom/cherry_blossom_PNG17.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: fall 10s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>⛩️ Zen Anime Binge Calculator ⛩️</h1>
+  <div class="input-area">
+    <input type="number" id="episodes" placeholder="No. of Episodes" min="1">
+    
+    <label>
+      Skip intro/outro?
+      <select id="skip">
+        <option value="yes">Yes ⏩</option>
+        <option value="no">No 🕒</option>
+      </select>
+    </label>
+
+    <label>
+      Playback speed:
+      <select id="speed">
+        <option value="1">1x 🐢</option>
+        <option value="1.25">1.25x 🐇</option>
+        <option value="1.5">1.5x 🚀</option>
+        <option value="2">2x ⚡</option>
+      </select>
+    </label>
+
+    <input type="number" id="dailyTime" placeholder="Daily Watch Time (min)" min="1" value="1440">
+    <button onclick="calculateAnimeTime()">Calculate Time 🧘‍♂️</button>
+  </div>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    function calculateAnimeTime() {
+      const episodes = parseInt(document.getElementById('episodes').value);
+      const skip = document.getElementById('skip').value === "yes";
+      const speed = parseFloat(document.getElementById('speed').value);
+      const dailyAvailableMin = parseInt(document.getElementById('dailyTime').value);
+
+      if (isNaN(episodes) || episodes <= 0 || isNaN(dailyAvailableMin) || dailyAvailableMin <= 0) {
+        alert("Please enter valid values.");
+        return;
+      }
+
+      let timePerEpisode = skip ? 20 : 24;
+      timePerEpisode = timePerEpisode / speed;
+
+      const totalMinutes = episodes * timePerEpisode;
+
+      const days = Math.floor(totalMinutes / (60 * 24));
+      const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
+      const minutes = Math.round(totalMinutes % 60);
+
+      const totalDaysRequired = Math.ceil(totalMinutes / dailyAvailableMin);
+
+      document.getElementById('result').innerHTML = 
+        `🕓 Total Time: <strong>${days}</strong> day(s), <strong>${hours}</strong> hour(s), and <strong>${minutes}</strong> minute(s)<br>
+        📅 At your pace, it'll take you <strong>${totalDaysRequired}</strong> day(s) to finish this anime.`;
+    }
+
+    function createPetal() {
+      const petal = document.createElement('div');
+      petal.classList.add('petal');
+      petal.style.left = `${Math.random() * 100}vw`;
+      petal.style.animationDuration = `${8 + Math.random() * 5}s`;
+      document.body.appendChild(petal);
+      setTimeout(() => petal.remove(), 12000);
+    }
+
+    setInterval(createPetal, 500);
+  </script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+body {
+    font-family: monospace, sans-serif; /* Mimic the fixed-width font */
+    background-color: #282a36; /* Dark background */
+    color: #f8f8f2; /* Light text color */
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Header Styling */
+header {
+    background-color: #44475a;
+    color: #f8f8f2;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left, .header-right {
+    display: flex;
+    gap: 15px;
+}
+
+.header-left i, .header-right i {
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.page-title {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    background-color: #44475a;
+    color: #f8f8f2;
+    width: 200px; /* Adjust width as needed */
+    padding: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li a {
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: #f8f8f2;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar li a:hover {
+    background-color: #6272a4;
+}
+
+/* Main Content Styling */
+.content {
+    flex-grow: 1;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; /* Adjust column widths */
+    grid-template-rows: auto auto 1fr; /* Adjust row heights */
+    gap: 20px;
+}
+
+/* Progress Section */
+.progress-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.circular-progress-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circular-progress {
+    position: relative;
+}
+
+.progress-circle .bg {
+    fill: none;
+    stroke-width: 10;
+    stroke-dasharray: 314;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+}
+
+.progress-circle .fg {
+    fill: none;
+    stroke-width: 10;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+.progress-center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1em;
+}
+
+.progress-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.progress-item label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.bar-container {
+    background-color: #44475a;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.bar {
+    background-color: #50fa7b; /* Teal/cyan accent */
+    height: 100%;
+    border-radius: 5px;
+    width: 0%; /* Will be set dynamically or based on data */
+}
+
+/* Info Section */
+.info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.quote-block {
+    background-color: #44475a;
+    padding: 15px;
+    border-radius: 5px;
+    font-style: italic;
+    font-size: 0.9em;
+    color: #bd93f9; /* Example quote color */
+}
+
+.current-title h2, .punishment h2 {
+    color: #f8f8f2;
+    margin-top: 0;
+    font-size: 1.1em;
+}
+
+.current-title .title {
+    font-size: 1.3em;
+    color: #50fa7b;
+    margin-top: 5px;
+}
+
+/* Currency Section */
+.currency-section {
+    background-color: #44475a;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.currency-section i {
+    margin-right: 5px;
+    color: #f1fa8c; /* Example icon color */
+}
+
+.currency-section span {
+    font-weight: bold;
+}
+
+.currency-section .amount {
+    font-size: 1.1em;
+    color: #8be9fd; /* Example amount color */
+    margin-top: 5px;
+}
+
+.currency-section .shop a {
+    color: #ff79c6; /* Example link color */
+    text-decoration: none;
+}
+
+/* Table Section */
+.table-section {
+    grid-column: 1 / -1; /* Span across both columns */
+    background-color: #44475a;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto; /* Enable horizontal scrolling for wide tables */
+}
+
+.table-section h2 {
+    margin-top: 0;
+    font-size: 1.1em;
+    color: #f8f8f2;
+    margin-bottom: 10px;
+}
+
+.table-section table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #f8f8f2;
+}
+
+.table-section th, .table-section td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #6272a4;
+}
+
+.table-section th {
+    font-weight: bold;
+}
+
+.table-section tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-section .bar-container {
+    background-color: #282a36;
+    height: 15px;
+    border-radius: 7.5px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.table-section .bar {
+    background-color: #50fa7b;
+    height: 100%;
+    border-radius: 7.5px;
+    width: 0%; /* Will be set based on progress */
+}
+
+.table-section .progress-value {
+    margin-left: 10px;
+    font-size: 0.9em;
+    color: #f8f8f2;
+}
+
+.table-section .xp-points {
+    text-align: right;
+}
+
+.table-section .add-row-button {
+    background-color: transparent;
+    color: #8be9fd;
+    border: 1px dashed #8be9fd;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.table-section .add-row-button:hover {
+    background-color: rgba(139, 233, 253, 0.1);
+}
+
+/* Responsive Design (Basic) */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        overflow-x: auto; /* If sidebar content is wide */
+    }
+
+    .content {
+        grid-template-columns: 1fr;
+        grid-

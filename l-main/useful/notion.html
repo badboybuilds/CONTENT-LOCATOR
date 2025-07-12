@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Buttons</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #fff;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #FF4081;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            max-width: 90%;
+        }
+
+        .button-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(15px);
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.2);
+        }
+
+        .button-container:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(255, 64, 129, 0.3);
+        }
+
+        .btn {
+            background: #FF4081;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: #E91E63;
+            transform: scale(1.1);
+        }
+
+        p {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 400;
+            color: #ddd;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Useful Links</h1>
+
+    <div class="container">
+        <div class="button-container">
+            <a href="https://destiny-capri-e35.notion.site/DaVinci-Resolve-Roadmap-1a0b22ebafa880baaf05e531b23890c4?pvs=74" class="btn" target="_blank">
+                Da Vinci Resolve Roadmap
+            </a>
+        </div>
+
+        <div class="button-container">
+            <a href="yourlink1" class="btn" target="_blank">XYZ</a>
+        </div>
+
+        <div class="button-container">
+            <a href="yourlink2" class="btn" target="_blank">XYZ</a>
+        </div>
+
+        <div class="button-container">
+            <a href="yourlink3" class="btn" target="_blank">XYZ</a>
+        </div>
+
+        <div class="button-container">
+            <a href="yourlink4" class="btn" target="_blank">XYZ</a>
+        </div>
+    </div>
+
+</body>
+</html>

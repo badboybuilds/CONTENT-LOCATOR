@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MIT Admission Chance Calculator (India Specific)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f5f5f5; /* Light gray background, similar to MIT websites */
+            color: #000000; /* Black text for better contrast */
+            font-family: 'Inter', sans-serif; /* Use Inter, a modern sans-serif font */
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #e65100; /* MIT's orange accent color */
+            margin-bottom: 20px;
+            font-weight: 600; /* Use a semi-bold font weight */
+        }
+        .container {
+            max-width: 750px;
+            margin: auto;
+            background: #ffffff; /* White container background */
+            padding: 30px;
+            border-radius: 10px; /* Slightly less rounded corners */
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            border: 1px solid #e0e0e0; /* Add a light border */
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 500; /* Medium font weight for labels */
+            color: #424242; /* Darker gray label color */
+            font-size: 15px;
+        }
+        input[type="number"], select, textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px; /* Less rounded corners for inputs */
+            border: 1px solid #cfd8dc; /* Use a light gray border */
+            font-size: 16px;
+            background-color: #fafafa; /* Very light gray background for inputs */
+            color: #212121; /* Very dark gray text */
+            box-sizing: border-box;
+            transition: border-color 0.2s ease; /* Smooth transition */
+        }
+        input[type="number"]:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #e65100; /* Highlight border on focus with MIT orange */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Add a subtle shadow on focus */
+        }
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23757575" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position-x: 95%;
+            background-position-y: 50%;
+            padding-right: 30px;
+            cursor: pointer;
+        }
+        select::-ms-expand {
+            display: none;
+        }
+        textarea {
+            resize: vertical;
+            height: auto;
+            min-height: 80px;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+        .checkbox-group label {
+            font-weight: 400;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: #424242;
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 12px;
+            width: auto;
+            height: auto;
+            cursor: pointer;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            background: #e65100; /* MIT orange */
+            border: none;
+            color: white;
+            border-radius: 5px; /* Less rounded corners for buttons */
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+            font-weight: 500;
+        }
+        button:hover {
+            background-color: #d84315; /* Darker orange on hover */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a shadow on hover */
+        }
+        button:active{
+             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Reduce shadow on active */
+             transform: translateY(1px);
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+            color: #00897b; /* A teal/green, complementary to orange */
+            font-weight: 600;
+        }
+        .important-note {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f4c3; /* Light yellow/beige, MIT uses similar colors */
+            border-radius: 5px;
+            font-size: 14px;
+            color: #5d4037; /* Dark brown text */
+            line-height: 1.6;
+            border: 1px solid #e0e082;
+        }
+        .important-note strong {
+            color: #e65100; /* MIT orange */
+        }
+        .note-small {
+            font-size: 12px;
+            color: #757575;
+            display: block;
+            margin-top: 5px;
+        }
+        .slider-group {
+            margin-top: 15px;
+        }
+        .slider-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #424242;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+        }
+        input[type="range"]:focus {
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            border: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #e65100; /* MIT orange */
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.2s ease;
+        }
+        input[type="range"]::-moz-range-thumb {
+            border: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #e65100;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.2s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover,
+        input[type="range"]::-moz-range-thumb:hover {
+            background: #d84315; /* Darker orange on hover */
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            background: #e0e0e0; /* Lighter gray track */
+            border-radius: 5px;
+            height: 8px;
+            cursor: pointer;
+        }
+        input[type="range"]::-moz-range-track {
+            background: #e0e0e0;
+            border-radius: 5px;
+            height: 8px;
+            cursor: pointer;
+        }
+        .slider-value {
+            font-size: 14px;
+            color: #757575;
+            display: block;
+            text-align: center;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            input[type="number"], select, textarea {
+                font-size: 14px;
+            }
+            button {
+                font-size: 16px;
+            }
+            .important-note {
+                font-size: 12px;
+            }
+            h1{
+                font-size: 24px;
+            }
+            .checkbox-group label{
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>MIT Admission Chance Calculator (India Specific) 🔥</h1>
+    <div class="container">
+        <label for="sat">SAT/ACT Score</label>
+        <select id="testType">
+            <option value="sat">SAT (out of 1600)</option>
+            <option value="act">ACT (out of 36)</option>
+        </select>
+        <input type="number" id="testScore" min="0" max="1600" placeholder="Enter your score">
+
+        <label>Academic Performance</label>
+        <select id="gradingSystem">
+            <option value="percentage">Percentage (%)</option>
+            <option value="10gpa">10-point GPA/CGPA</option>
+        </select>
+        <input type="number" id="academicScore" placeholder="Enter your score">
+
+        <label for="marks10">10th Grade Marks/CGPA (out of 10 CGPA or %)</label>
+        <input type="number" id="marks10" placeholder="Enter your 10th grade score">
+
+        <label for="marks12">12th Grade Marks/Percentage (expected or actual)</label>
+        <input type="number" id="marks12" placeholder="Enter your 12th grade score/percentage">
+
+        <label for="rank">Class Rank (if applicable, e.g., 5/150)</label>
+        <input type="text" id="rank" placeholder="e.g., 5/150">
+
+        <label for="ecActivities">Number of Significant Extracurricular Activities</label>
+        <input type="number" id="ecActivities" min="0">
+
+        <label>Extracurricular Activities (Check all that apply)</label>
+        <div class="checkbox-group">
+            <label><input type="checkbox" value="language"> Learning a Language (like Japanese)</label>
+            <label><input type="checkbox" value="youtube"> YouTube (Self-Improvement/Educational Content Creation)</label>
+            <label><input type="checkbox" value="gym"> Regular Gym/Fitness Activities with achievements</label>
+            <label><input type="checkbox" value="webdev"> Web Development (Personal Projects/Freelancing)</label>
+            <label><input type="checkbox" value="stemResearch"> STEM Research (e.g., Science Olympiad, research papers)</label>
+            <label><input type="checkbox" value="leadership"> Leadership Roles (e.g., club president, team captain)</label>
+            <label><input type="checkbox" value="communityService"> Significant Community Service (with impact)</label>
+            <label><input type="checkbox" value="arts"> Arts (e.g., music, drama, visual arts with significant achievements/exhibitions)</label>
+            <label><input type="checkbox" value="athletics"> Competitive Athletics (School/Regional/National level)</label>
+            <label><input type="checkbox" value="entrepreneurship"> Entrepreneurship/Start-up Experience (even small scale)</label>
+            <label><input type="checkbox" value="codingCompetitions"> Coding Competitions (e.g., ACM-ICPC, USACO, Codeforces)</label>
+            <label><input type="checkbox" value="debateSpeech"> Debate/Speech (Competitions and significant roles)</label>
+            <label><input type="checkbox" value="internationalCompetitions"> International Competitions/Recognition (in any field)</label>
+            <label><input type="checkbox" value="volunteering"> Consistent Volunteering (beyond just school requirements)</label>
+            <label><input type="checkbox" value="studentGovernment"> Student Government Roles (significant impact)</label>
+            <label><input type="checkbox" value="robotics"> Robotics Competitions/Projects</label>
+            <label><input type="checkbox" value="modelUnitedNations"> Model United Nations (MUN) with significant achievements</label>
+            <label><input type="checkbox" value="creativeWriting"> Creative Writing (Published work, significant awards)</label>
+        </div>
+
+        <label for="awards">Number of Significant Awards and Honors (Academic or Extracurricular)</label>
+        <input type="number" id="awards" min="0">
+
+        <label for="essay">Essay Quality (Rate from 1 - Poor to 5 - Excellent)</label>
+        <select id="essay">
+            <option value="3" selected>Average</option>
+            <option value="1">Poor</option>
+            <option value="2">Below Average</option>
+            <option value="4">Good</option>
+            <option value="5">Excellent</option>
+        </select>
+
+        <label for="recommendations">Strength of Recommendation Letters (Rate from 1 - Weak to 5 - Strong)</label>
+        <select id="recommendations">
+            <option value="3" selected>Average</option>
+            <option value="1">Weak</option>
+            <option value="2">Below Average</option>
+            <option value="4">Good</option>
+            <option value="5">Strong</option>
+        </select>
+
+        <label for="intendedMajor">Intended Major (Consider competitiveness)</label>
+        <select id="intendedMajor">
+            <option value="cs">Computer Science</option>
+            <option value="engineering">Engineering (General)</option>
+            <option value="eeecs">Electrical Engineering and Computer Science</option>
+            <option value="physics">Physics</option>
+            <option value="math">Mathematics</option>
+            <option value="biology">Biology</option>
+            <option value="chemistry">Chemistry</option>
+            <option value="economics">Economics</option>
+            <option value="architecture">Architecture</option>
+            <option value="other">Other</option>
+        </select>
+
+        <label for="passionProject">Describe a Significant Passion Project (Optional, briefly)</label>
+        <textarea id="passionProject" rows="3" placeholder="e.g., Developed a mobile app for local businesses"></textarea>
+
+        <div class="slider-group">
+            <label for="researchExperience">Research Experience (Scale of Involvement: 0 - None to 5 - Significant)</label>
+            <input type="range" id="researchExperience" min="0" max="5" value="0">
+            <span class="slider-value" id="researchExperienceValue">0</span>
+        </div>
+
+        <div class="slider-group">
+            <label for="codingSkills">Coding Proficiency (Scale: 0 - Beginner to 5 - Advanced)</label>
+            <input type="range" id="codingSkills" min="0" max="5" value="0">
+            <span class="slider-value" id="codingSkillsValue">0</span>
+        </div>
+
+        <div class="slider-group">
+            <label for="innovationQuotient">Innovation/Creativity (Self-Assessment: 0 - Low to 5 - High)</label>
+            <input type="range" id="innovationQuotient" min="0" max="5" value="0">
+            <span class="slider-value" id="innovationQuotientValue">0</span>
+        </div>
+
+        <button onclick="calculateChance()">Calculate My MIT Chances 🔍</button>
+        <div class="result" id="result"></div>
+
+        <div class="important-note">
+            <strong>Important Note:</strong> This calculator provides an <em>estimated</em> chance of admission to MIT based on the information you provide, keeping in mind the academic context in India. Admission is highly competitive and depends on a holistic review of your entire application, including factors not explicitly included here. This is not a guarantee of admission. Good luck!
+        </div>
+        <p class="note-small">Disclaimer: This is not an official MIT admissions tool.  It is for informational purposes only.</p>
+    </div>
+
+    <script>
+        // Update slider values in real-time
+        document.addEventListener('input', function (e) {
+            if (e.target.type === 'range') {
+                document.getElementById(e.target.id + 'Value').textContent = e.target.value;
+            }
+        });
+
+        function calculateChance() {
+            const testType = document.getElementById("testType").value;
+            const testScore = parseInt(document.getElementById("testScore").value);
+            const gradingSystem = document.getElementById("gradingSystem").value;
+            const academicScore = parseFloat(document.getElementById("academicScore").value);
+            const marks10 = parseFloat(document.getElementById("marks10").value);
+            const marks12 = parseFloat(document.getElementById("marks12").value);
+            const rankText = document.getElementById("rank").value;
+            const ecActivities = parseInt(document.getElementById("ecActivities").value);
+            const hobbies = document.querySelectorAll(".checkbox-group input:checked");
+            const awards = parseInt(document.getElementById("awards").value);
+            const essayQuality = parseInt(document.getElementById("essay").value);
+            const recommendationStrength = parseInt(document.getElementById("recommendations").value);
+            const intendedMajor = document.getElementById("intendedMajor").value;
+            const researchExperience = parseInt(document.getElementById("researchExperience").value);
+            const codingSkills = parseInt(document.getElementById("codingSkills").value);
+            const innovationQuotient = parseInt(document.getElementById("innovationQuotient").value);
+
+            let score = 0;
+            let maxScore = 100;
+            let resultText = "Calculating..."; // Initial text
+
+            // Input Validation (basic - add more as needed)
+            if (isNaN(testScore) || isNaN(academicScore) || isNaN(marks10) || isNaN(marks12)) {
+                resultText = "Please enter valid numeric values for all scores.";
+                document.getElementById("result").textContent = resultText;
+                return;
+            }
+            if (testType === "sat" && (testScore < 0 || testScore > 1600)) {
+                resultText = "Please enter a valid SAT score (0-1600).";
+                document.getElementById("result").textContent = resultText;
+                return;
+            }
+            if (testType === "act" && (testScore < 0 || testScore > 36)) {
+                resultText = "Please enter a valid ACT score (0-36).";
+                document.getElementById("result").textContent = resultText;
+                return;
+            }
+            if (gradingSystem === "percentage" && (academicScore < 0 || academicScore > 100)) {
+                resultText = "Please enter a valid percentage (0-100).";
+                document.getElementById("result").textContent = resultText;
+                return;
+            }
+             if (gradingSystem === "10gpa" && (academicScore < 0 || academicScore > 10)) {
+                resultText = "Please enter a valid GPA (0-10).";
+                document.getElementById("result").textContent = resultText;
+                return;
+            }
+            if (marks10 < 0 || (gradingSystem === "percentage" && marks10>100) || (gradingSystem==="10gpa" && marks10>10))
+            {
+                 resultText = "Please enter a valid 10th grade score.";
+                document.getElementById("result").textContent = resultText;
+                return;
+            }
+            if (marks12 < 0 || marks12>100)
+            {
+                 resultText = "Please enter a valid 12th grade score.";
+                document.getElementById("result").textContent = resultText;
+                return;
+            }
+
+            // Standardized Test Scores
+            if (testType === "sat") {
+                if (testScore >= 1550) score += 18;
+                else if (testScore >= 1500) score += 16;
+                else if (testScore >= 1450) score += 14;
+                else if (testScore >= 1400) score += 12;
+                else if (testScore >= 1350) score += 10;
+                else if (testScore >= 1300) score += 8;
+                else score += Math.max(0, (testScore - 1200) / 20); //scaled
+            } else if (testType === "act") {
+                if (testScore >= 35) score += 18;
+                else if (testScore >= 34) score += 16;
+                else if (testScore >= 33) score += 14;
+                else if (testScore >= 32) score += 12;
+                else if (testScore >= 31) score += 10;
+                else if (testScore >= 30) score += 8;
+                else score += Math.max(0, (testScore - 27) * 2); //scaled
+            }
+
+            // Academic Performance (Converting to a rough 4.0 scale for comparison)
+            let gpa_4_0_equivalent = 0;
+            if (gradingSystem === "percentage") {
+                gpa_4_0_equivalent = (academicScore / 100) * 4;
+            } else if (gradingSystem === "10gpa") {
+                gpa_4_0_equivalent = (academicScore / 10) * 4; // A simplified conversion
+            }
+
+            if (gpa_4_0_equivalent >= 3.9) score += 14;
+            else if (gpa_4_0_equivalent >= 3.8) score += 12;
+            else if (gpa_4_0_equivalent >= 3.7) score += 10;
+            else if (gpa_4_0_equivalent >= 3.6) score += 8;
+            else score += Math.max(0, (gpa_4_0_equivalent - 3.0) * 3);
+
+            // 10th Grade Performance
+            if (gradingSystem === "percentage") {
+                if (marks10 >= 95) score += 4;
+                else if (marks10 >= 90) score += 3;
+                else if (marks10 >= 85) score += 2;
+                else score += Math.max(0, (marks10 - 75) / 5);
+            } else if (gradingSystem === "10gpa") {
+                if (marks10 >= 9.5) score += 4;
+                else if (marks10 >= 9.0) score += 3;
+                 else if (marks10 >= 8.5) score += 2;
+                else score += Math.max(0, (marks10 - 7.5) / 0.5);
+            }
+
+            // 12th Grade Performance
+            if (marks12 >= 95) score += 14;
+            else if (marks12 >= 90) score += 11;
+            else if (marks12 >= 85) score += 9;
+            else score += Math.max(0, (marks12 - 75) / 2);
+
+            // Class Rank
+            if (rankText) {
+                const [rank, total] = rankText.split('/').map(Number);
+                if (rank && total && (rank / total) <= 0.05) score += 8;
+                else if (rank && total && (rank / total) <= 0.10) score += 5;
+                else if (rank && total && (rank/total) <= 0.20) score+=2;
+            }
+
+            // Extracurricular Activities
+            let ecScore = 0;
+            hobbies.forEach(hobby => {
+                if (hobby.value === "stemResearch") ecScore += 4;
+                else if (hobby.value === "leadership") ecScore += 4;
+                else if (hobby.value === "communityService") ecScore += 3;
+                else if (hobby.value === "arts")ecScore += 3;
+                else if (hobby.value === "athletics") ecScore += 3;
+                else if (hobby.value === "entrepreneurship") ecScore += 4;
+                else if (hobby.value === "codingCompetitions") ecScore += 4;
+                else if (hobby.value === "debateSpeech") ecScore += 3;
+                else if (hobby.value === "internationalCompetitions") ecScore += 5;
+                else if (hobby.value === "language") ecScore += 2;
+                else if (hobby.value === "youtube") ecScore += 2;
+                else if (hobby.value === "gym") ecScore += 1;
+                else if (hobby.value === "webdev") ecScore += 2;
+                else if (hobby.value === "volunteering") ecScore += 2;
+                else if (hobby.value === "studentGovernment") ecScore += 2;
+                else if (hobby.value === "robotics") ecScore += 3;
+                else if (hobby.value === "modelUnitedNations") ecScore += 3;
+                else if (hobby.value === "creativeWriting") ecScore += 3;
+            });
+            score += Math.min(15, ecScore);
+
+            // Awards
+            if (awards >= 5) score += 7;
+            else if (awards >= 3) score += 5;
+            else if (awards >= 1) score += 2;
+
+            // Essay Quality (Max 5)
+            score += essayQuality;
+
+            // Recommendation Strength (Max 5)
+            score += recommendationStrength;
+
+            // Intended Major
+            if (intendedMajor === "cs" || intendedMajor === "eeecs") score -= 3; // Competitive majors
+            else if (intendedMajor === "engineering") score -= 2;
+
+            // Research Experience
+            score += researchExperience;
+
+            // Coding Skills
+            score += codingSkills;
+
+            // Innovation Quotient
+            score += innovationQuotient;
+
+            // Calculate percentage chance (simplified)
+            const percentage = Math.max(0, Math.min(100, (score / maxScore) * 100));
+
+            if (percentage >= 90) resultText = "Highly Likely!   шансы өте жоғары!";
+            else if (percentage >= 80) resultText = "Very GoodChance!  Мүмкіндігіңіз өте жақсы!";
+            else if (percentage >= 70) resultText = "Good Chance!  Жақсы мүмкіндік!";
+            else if (percentage >= 60) resultText = "Fair Chance.  Әділ мүмкіндік.";
+            else if (percentage >= 50) resultText = "Possible, but Competitive.  Мүмкін, бірақ бәсекелес.";
+            else resultText = "Unlikely.  Үміт аз.";
+
+            document.getElementById("result").textContent = resultText + ` (Estimated Chance: ${percentage.toFixed(2)}%)`;
+        }
+    </script>
+</body>
+</html>

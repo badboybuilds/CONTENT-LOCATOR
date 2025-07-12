@@ -1,0 +1,106 @@
+ /* Typography & Font Setup */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+    --main-bg: linear-gradient(135deg, #0f172a, #1e293b);
+    --primary-color: #FF4081;
+    --primary-hover: #E91E63;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-hover-bg: rgba(255, 255, 255, 0.2);
+    --text-light: #fff;
+    --text-secondary: #ddd;
+    --transition-fast: 0.3s ease-in-out;
+    --border-radius: 15px;
+    --shadow: 0 5px 15px rgba(255, 64, 129, 0.2);
+    --shadow-hover: 0 8px 20px rgba(255, 64, 129, 0.3);
+}
+
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--main-bg);
+    color: var(--text-light);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Container Setup */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    max-width: 90%;
+}
+
+/* Button Card Styles */
+.button-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--glass-bg);
+    padding: 15px 25px;
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(15px);
+    transition: var(--transition-fast);
+    box-shadow: var(--shadow);
+}
+
+.button-container:hover {
+    transform: scale(1.1);
+    background: var(--glass-hover-bg);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Button Styles */
+button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+button:hover {
+    background: var(--primary-hover);
+    transform: scale(1.1);
+}
+
+/* Paragraph under buttons */
+p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
